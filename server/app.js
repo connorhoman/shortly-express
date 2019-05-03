@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const Auth = require('./middleware/auth');
 const models = require('./models');
 
+
 const app = express();
 
 app.set('views', `${__dirname}/views`);
@@ -78,6 +79,28 @@ app.post('/links',
 // Write your authentication routes here
 /************************************************************/
 
+// POST to the location /signup
+app.post('/signup', (req, res, next) => {
+    let username = req.body.username;
+    let password = req.body.password;
+    
+    return models.Users.get({username})
+    .then(user => {
+      if (user === undefined) {
+        models.Users.create({username, password});
+        res.redirect('/');
+        res.end();
+      } else {
+        res.redirect('/signup');
+      }
+    })
+    .error(error => {
+      res.status(500).send(error);
+    })
+    .catch(link => {
+      res.status(200).send(link);
+    });
+});
 
 
 /************************************************************/

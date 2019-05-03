@@ -123,7 +123,7 @@ describe('', function() {
     });
   });
 
-  xdescribe('Account Creation:', function() {
+  describe('Account Creation:', function() {
 
     it('signup creates a new user record', function(done) {
       var options = {
@@ -134,8 +134,8 @@ describe('', function() {
           'password': 'Samantha'
         }
       };
-
       request(options, function(error, res, body) {
+        
         var queryString = 'SELECT * FROM users where username = "Samantha"';
         db.query(queryString, function(err, rows) {
           if (err) { done(err); }
@@ -208,7 +208,7 @@ describe('', function() {
     });
   });
 
-  xdescribe('Account Login:', function() {
+  describe('Account Login:', function() {
 
     beforeEach(function(done) {
       var options = {
