@@ -348,7 +348,6 @@ describe('', function() {
         
         cookieParser(requestWithoutCookies, response, function() {
           var cookies = requestWithoutCookies.cookies;
-          console.log(cookies);
           expect(cookies).to.be.an('object');
           expect(cookies).to.eql({});
         });
