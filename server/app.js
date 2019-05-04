@@ -102,6 +102,33 @@ app.post('/signup', (req, res, next) => {
     });
 });
 
+app.post('/login', (req, res, next) => {
+  let username = req.body.username;
+  let attemptedPassword = req.body.password;
+
+  return models.Users.get({username})
+  .then(user => {
+    var password = user.password;
+    var salt = user.salt;
+    return models.Users.compare(attemptedPassword, password, salt)
+  })
+  .then(loggedIn => {
+    if (loggedIn) {
+      res.redirect('/');
+      res.end();
+    } else {
+      res.redirect('/login');
+    }
+  })
+  .error(error => {
+    res.redirect('/login');
+  })
+  .catch(user => {
+    res.redirect('/login');
+  });
+})
+
+
 
 /************************************************************/
 // Handle the code parameter route last - if all other routes fail
